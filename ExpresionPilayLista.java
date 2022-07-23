@@ -24,7 +24,7 @@ public class ExpresionPilayLista {
         fin = null;
     }
 
-    public void listarYEnlistar(String caracter) {
+    public void EPOS(String caracter) {
         if (cabeza == null) //no hay lista
         {
             cabeza = new nodo();
@@ -56,18 +56,17 @@ public class ExpresionPilayLista {
     public void desapilarTodo() {
         nodo temp;
 
-        if (cima != null) {
-            while (cima != null) {                
+        if (cima != null) {// PILA EXISTE
+            while (cima != null) {
 
                 if (cima == falda) {
-                    listarYEnlistar(cima.getDato());
+                    EPOS(cima.getDato());
                     cima = null;
                     falda = null;
 
                 } else {
                     temp = cima;
-                    listarYEnlistar(cima.getDato());
-
+                    EPOS(cima.getDato());
                     cima = cima.getEnlace();
                     temp.setEnlace(null);
                 }
@@ -80,11 +79,11 @@ public class ExpresionPilayLista {
     public String desapilarElemento() {
         nodo temp;
         String aux = "";
-        if (cima != null) {
+        if (cima != null) {//PILA EXISTE
 
             // cima.mostrar();
             if (cima == falda) {
-                aux = aux + cima.getDato();
+                aux = cima.getDato();
                 cima = null;
                 falda = null;
 
@@ -97,6 +96,14 @@ public class ExpresionPilayLista {
 
         }
         return aux;
+    }
+
+    public void mostrarLista() {
+        nodo temp = cabeza;
+        while (temp != null) {//LISTA EXISTE            
+            System.out.print(temp.getDato());//solucionado y mostrando la lista
+            temp = temp.getEnlace();
+        }
     }
 
     public static int Priorizar(String signo) {
@@ -125,7 +132,7 @@ public class ExpresionPilayLista {
                 do {
                     dato = pila.desapilarElemento();
                     if (!dato.equals("(")) {
-                        pila.listarYEnlistar(dato);
+                        pila.EPOS(dato);
                     }
                 } while (!dato.equals("("));
 
@@ -146,14 +153,14 @@ public class ExpresionPilayLista {
                         } else {
                             int precedencia = Priorizar(salientePila);
                             if (operador == precedencia) {
-                                pila.listarYEnlistar(salientePila);
+                                pila.EPOS(salientePila);
 
                             } else if (operador > precedencia) {
                                 pila.apilar(salientePila);
                                 pila.apilar(aux);
                                 aux = "";
                             } else {
-                                pila.listarYEnlistar(salientePila);
+                                pila.EPOS(salientePila);
                                 aux = "";
 
                             }
@@ -162,20 +169,15 @@ public class ExpresionPilayLista {
 
                 } while (!aux.equals(""));
             } else {
-                pila.listarYEnlistar(aux);
+                pila.EPOS(aux);
 
             }
 
         }
 
-        String resto = "";
-        if (pila.cima != null) {
-            resto = pila.desapilarTodo();
-        }
+        pila.desapilarTodo();
 
-        epos = epos + pila.vacioComilla(epos, resto);
-
-        System.out.println(epos);
+        pila.mostrarLista();
 
     }
 }
