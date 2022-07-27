@@ -154,6 +154,8 @@ public class ExpresionPilayLista {
                             int precedencia = Priorizar(salientePila);
                             if (operador == precedencia) {
                                 pila.EPOS(salientePila);
+                                pila.apilar(aux);
+                                aux = "";
 
                             } else if (operador > precedencia) {
                                 pila.apilar(salientePila);
@@ -161,6 +163,7 @@ public class ExpresionPilayLista {
                                 aux = "";
                             } else {
                                 pila.EPOS(salientePila);
+                                pila.apilar(aux);
                                 aux = "";
 
                             }
